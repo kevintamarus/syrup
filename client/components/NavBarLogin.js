@@ -21,8 +21,6 @@ export default class NavBarLogin extends React.Component {
 	}
 
 	render(){
-		// const { isAuthenticated } = this.props.auth;
-
 		return(
 			<nav className="navbar navbar-default navbar-fixed-top topnav" role="navigation">
         		<div className="container topnav">
@@ -39,7 +37,6 @@ export default class NavBarLogin extends React.Component {
                 		<ul className="nav navbar-nav navbar-right">
                     		<li>
                         		<a onClick={this.login} style={{cursor:'pointer'}}>Log In</a>
-														{console.log('this is the props', this.props.auth)}
                     		</li>
                     		<li>
                         		<a onClick={this.login} style={{cursor:'pointer'}}>Sign Up</a>

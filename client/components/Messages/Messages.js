@@ -4,10 +4,7 @@ import NavBar from '../NavBar';
 import MatchList from './MatchList';
 import SocketIsockOClient from 'socket.io-client';
 import axios from 'axios';
-// const socket = io.connect();
-// const divStyle = {
-//   height: 500,
-// };
+
 export default class Messages extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +14,8 @@ export default class Messages extends React.Component {
       firstnames: [],
       firstname: '',
       matcheeIds: [],
-      myname:''
+      myname:'',
+      userId: null
     }
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnSend = this.handleOnSend.bind(this);
@@ -27,7 +25,6 @@ export default class Messages extends React.Component {
     this.socket = io('/')
     this.socket.on('chat message', data => {
       this.setState({
-          text: '',
           messages: [...this.state.messages, data],
         })
     })
@@ -43,6 +40,7 @@ export default class Messages extends React.Component {
         for (let j = 0; j < this.state.matcheeIds.length; j++) {
           axios.get(`http://localhost:8080/api/profile/${this.state.matcheeIds[j]}`)
             .then(({data}) => {
+              
               this.setState({
                 firstnames: [...this.state.firstnames, data.firstname]
               })
@@ -55,52 +53,49 @@ export default class Messages extends React.Component {
       text: e.target.value
     })
   }
+
   handleOnSend(e){
     e.preventDefault();
     this.socket.emit('send message', this.state.text)
-    this.setState({
-      text: ''
+    axios.get(`http://localhost:8080/api/users/${this.state.firstname}`)
+    .then(data => {
+      this.setState({
+        userId: Number(data.data[0].id)
+      })
     })
-    axios.post(`http://localhost:8080/api/message/${localStorage.idTokenPayload}/${this.state.firstname}`, {
-      text: this.state.text
+    .then(() => {
+      axios.post(`http://localhost:8080/api/message/${localStorage.idTokenPayload}/${this.state.userId}`, {
+        text: this.state.text
+      })
+    })
+    .then(() => {
+      this.setState({
+        text: ''
+      })
     })
   }
-  handleMatchClick(i){
-    console.log('this is the key', i)
+
+  
+ handleMatchClick(i){
     let name = this.state.firstnames[i]
     this.setState({
       firstname: name,
       messages:[]
     }, () => {
-      console.log('this is the first name', this.state.firstname)
-      // axios.get(`http://localhost:8080/api/message/${localStorage.idTokenPayload}/${this.state.firstname}`)
-      // .then(({data}) => {
-      //   console.log('this is the data', data)
-      //   for (let i = 0; i < data.length; i++) {
-      //   this.setState({
-      //     messages: [...this.state.messages, data[i].text]
-      //   })
-      //   console.log('this is the messages', this. state.messages);
-      // }})
-        axios.get(`http://localhost:8080/api/message/${localStorage.idTokenPayload}`)
-          .then(({data}) => {
-            console.log('this is the data of trying to get the firstname', data[0].email)
-            this.setState({
-              myname: data[0].email
-            }, () => {
-                axios.get(`http://localhost:8080/api/message/${localStorage.idTokenPayload}/${this.state.firstname}`)
-                .then(({data}) => {
-                  console.log('this is the data', data)
-                  for (let i = 0; i < data.length; i++) {
-                  this.setState({
-                    messages: [...this.state.messages, data[i].text]
-                  })
-                  console.log('this is the messages', this. state.messages);
-                }}) 
-            })
+      axios.get(`http://localhost:8080/api/users/${name}`)
+      .then(({data}) => {
+        let id = Number(data[0].id)
+        axios.get(`http://localhost:8080/api/message/${localStorage.idTokenPayload}/${id}`)
+        .then(({data}) => {
+          for (let i = 0; i < data.length; i++) {         
+          this.setState({
+            messages: [...this.state.messages, data[i].text]
           })
+        }}) 
+      })
     })
   }
+
   render() {
     return (
       <div className="intro-message">
@@ -109,10 +104,8 @@ export default class Messages extends React.Component {
           <div className="chatList">
             <MatchList firstnames={this.state.firstnames} handleMatchClick={this.handleMatchClick}/>
           </div>
-          {/* <div style={divStyle} > */}
           <div className="message-box">
             <MessageBox messages={this.state.messages} firstname={this.state.firstname} handleMatchClick={this.handleMatchClick} myname={this.state.myname}/>
-          {/* </div> */}
             <div>
               <form className="message-form">
                 <input name="message" value={this.state.text} onChange={this.handleOnChange}/>
