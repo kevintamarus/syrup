@@ -17,7 +17,6 @@ export default class MyMatch extends React.Component{
 	}
 
 	componentDidMount(){
-		console.log('RENDERED', this.state.id);
 		axios.get(`/api/profile/${this.state.id}`)
 			.then(data => {
 				console.log('PROFILE INFO: ', data.data);
@@ -31,7 +30,6 @@ export default class MyMatch extends React.Component{
 
 
 	render(){
-		console.log('This is the props in MyMatch: ', this.props);
 		return (
 			<div className="col-sm-4 text-center match" onClick={this.renderProfile}>
 				<h2>{this.state.firstname}, {this.state.age}</h2>

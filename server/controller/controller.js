@@ -56,11 +56,24 @@ module.exports = {
     })
   },
 
+  getUserId: (req, res) => {
+    Model.User.findAll({
+      where:{
+        firstname: req.params.firstname
+      }
+    })
+    .then(data=> {
+      res.status(200).send(data)
+    })
+    .catch(err => {
+      res.status(404).send(err)
+    })
+  },
+
   getProfile: (req, res) => {
     Model.User.findById(req.params.id)
     .then(response => {
       res.send(response);
-      //res.redirect(`/profile/${req.params.id}`);
     })
     .catch(err => { if (err) {console.error(err) } })
   },
@@ -108,10 +121,6 @@ module.exports = {
     console.log('Trying to retrieve matches');
     Model.Match.findAll({
       where: { userId: req.params.userId },
-      // include:[{
-      //   model: Model.User, as: 'matchee',
-      //   // attributes: ['firstname']
-      // }]
     })
       .then(match => {
         res.status(202).send(match);

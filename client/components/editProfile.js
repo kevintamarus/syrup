@@ -98,7 +98,6 @@ class editProfile extends Component {
   }
 
   handleOnUpdate() {
-    console.log(this.state);
     const body = {
       "image": this.state.profilepic,
       "subject_id": this.state.subject_id,
@@ -109,7 +108,6 @@ class editProfile extends Component {
       "app_id": appId.appId
     };
 
-    console.log('body is', body);
 
     axios.all([
       axios.put(`/api/updateProfile/${localStorage.idTokenPayload}`, this.state),

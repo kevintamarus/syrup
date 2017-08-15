@@ -24,53 +24,37 @@ export default class Auth {
   }
 
   handleAuthentication() {
-    console.log('youre in handle authentication')
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        console.log('this is your auth result', authResult)
         axios.get('https://stephaniefu.auth0.com/userinfo', {
           headers: {'Authorization': `Bearer ${authResult.accessToken}`}
         })
-    .then(({ data }) => {
-      console.log('this is the data', data)
-      console.log('this is the datan', data.name)
-      console.log('this is the datas', data.sub)
-      axios.post('/api/profile', {
-        email: data.name,
-        id: data.sub
+      .then(({ data }) => {
+        axios.post('/api/profile', {
+          email: data.name,
+          id: data.sub
+        })
+        .then(res => {
+        })
+        .then(()=> {
+          this.setSession(authResult);
+        })
       })
-      .then(res => {
-        console.log('asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsdafasdfasdf',res);
-        // axios.get('/api/')
-      })
-      .then(()=> {
-        this.setSession(authResult);
-      })
-    })
-    .catch(err => {
-      console.log(err)
-    })
-        // history.replace('/upload');
+      .catch(err => {})
       } else if (err) {
-        // history.replace('/upload');
-        console.log(err);
-      }
+          console.log(err);
+        }
     });
   }
 
   setSession(authResult) {
     // Set the time that the access token will expire at
-    console.log('we are in setSesstions')
     let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-    console.log('HERE IS TYPE') 
-    console.log('HERE IS TYPE', authResult.idTokenPayload['sub'])
     localStorage.setItem('idTokenPayload', authResult.idTokenPayload['sub'])
-    // localStorage.setItem('idTokenPayload', authResult.idTokenPayload[0])
-    // console.log('this is the authResesult', JSON.parse(authResult)) 
-// navigate to the home route
+    // navigate to the home route
     history.replace('/upload');
   }
 

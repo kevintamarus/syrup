@@ -9,7 +9,7 @@ export default class OwnProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: localStorage.idTokenPayload, // will later dynamically know which user it is
+      id: localStorage.idTokenPayload, 
       firstname: '',
       profilepic: '',
       images: [],

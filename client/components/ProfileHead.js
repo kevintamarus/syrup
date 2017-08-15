@@ -38,7 +38,6 @@ export default class ProfileHead extends React.Component {
             <h2>{this.props.data.firstname}, {this.props.data.age}</h2>
             <p>{this.props.data.bio}</p>
             {this.isOwnProfile()}
-            {/* {this.isMatched()} */}
           </div>
         </div>
       </div>

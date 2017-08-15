@@ -1,7 +1,6 @@
 import React from 'react';
 import NavBarLogin from './NavBarLogin';
 import NavBar from './NavBar';
-import Main from './Main';
 import Messages from './Messages/Messages';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import HomePage from './HomePage';
@@ -16,15 +15,6 @@ import editProfile from './editProfile';
 
 const auth = new Auth();
 
-// const handleAuthentication = (nextState, replace) => {
-// 	console.log('arguments', arguments);
-//   if (/access_token|id_token|error/.test(nextState.location.hash)) {
-// 		auth.handleAuthentication()
-// 		.then((res) => {
-// 			console.log(res)
-// 		})
-//   }
-// }
 
 const App = () => {
 	if(auth.isAuthenticated()) {
@@ -40,7 +30,6 @@ const App = () => {
       <Route exact path='/' component={HomePage}/>
       <Route exact path='/upload' component={UploadPage}/>
       <Route exact path='/profile' component={ownProfile}/>
-      {/* <Route exact path='/ownProfile' component={ownProfile}/> */}
       <Route exact path='/matches' component={Matches}/>
       <Route exact path='/messages' component={Messages}/>
       <Route exact path='/editProfile' component={editProfile}/>

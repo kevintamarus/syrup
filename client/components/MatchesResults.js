@@ -8,7 +8,6 @@ export default class MatchesResults extends React.Component {
 	}
 
 	render(){
-		//console.log('These are props.matches in MUS: ', this.props.matches);
 		return(
 			<div className="content-section-a">
 		        <div className="container">

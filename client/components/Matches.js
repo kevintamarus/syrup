@@ -13,7 +13,6 @@ export default class Matches extends React.Component {
   }
 
   componentDidMount(){
-    console.log('THIS IS A userID in Matches: ', this.state.userId);
     axios.get(`/api/matches/${this.state.userId}`)
       .then(data => {
         this.setState({matches: data.data});
@@ -22,7 +21,6 @@ export default class Matches extends React.Component {
       .catch(err => {
         console.log(err);
       })
-    console.log('These are the props in matches: ', this.props);
   }
 
   render() {
