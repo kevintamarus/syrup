@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NavBar from './NavBar';
 
 class VideoChat extends Component {
   constructor(props) {
@@ -48,15 +49,17 @@ class VideoChat extends Component {
 
   render() {
     return (
-      <div className="video-chat-div">
+			<div className="intro-message">
+
+				<NavBar />
 
         <form name="loginForm" id="login" action="#" onSubmit={this.login}>
             <input type="text" name="username" id="username" placeholder="Pick a username!" onChange={this.handleUsername} />
-            <input type="submit" name="login_submit" value="Log In" />
+            <input type="submit" name="login_submit" value="Your Name!" />
         </form>
 
         <form name="callForm" id="call" action="#" onSubmit={this.makeCall}>
-          <input type="text" name="number" placeholder="Enter user to dial!" onChange={this.handleNumber} />
+          <input type="text" name="number" placeholder="Enter partner's name!" onChange={this.handleNumber} />
           <input type="submit" value="Call"/>
         </form>
 
