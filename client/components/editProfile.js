@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import request from 'superagent';
-import appId from '../../apiKey';
-import apiKey from '../../apiKey';
 import NavBar from './NavBar';
+import path from 'path';
+require('dotenv').config({
+  path: path.resolve(__dirname, '../../.env')
+});
 
 const CLOUDINARY_UPLOAD_PRESET = 'bjotvl61';
 const CLOUDINARY_UPLOAD_URL = 'https://api.cloudinary.com/v1_1/dmbpgz4gp/image/upload';
@@ -104,8 +106,8 @@ class editProfile extends Component {
       "gallery_name": "SyrupPractice"
     };
     const api = {
-      "app_key": apiKey.apiKey,
-      "app_id": appId.appId
+      "app_key": process.env.APP_KEY,
+      "app_id": process.env.APP_ID
     };
 
 

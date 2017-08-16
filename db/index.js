@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-// const url = require('./dbUrl');
+require('dotenv').config();
 
-const db = new Sequelize('postgres://vcfqixeu:j4fYrCKP9MbK07OMSpc-SYSKwSso_fsR@pellefant.db.elephantsql.com:5432/vcfqixeu', {
+const db = new Sequelize(process.env.DATABASE_URL, {
   pool: {
     max: 3,
     min: 0,

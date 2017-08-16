@@ -30,6 +30,7 @@ class NavBar extends Component {
             <ul className="nav navbar-nav navbar-right">
               <li><Link to='/matches'>Matches</Link></li>
               <li><Link to='/messages'>Messages</Link></li>
+              <li><Link to='/videochat'>Video Chat</Link></li>
               <li><Link to='/upload'>Upload</Link></li>
               <li><Link to='/profile'>Profile</Link></li>
               <li><a onClick={() => this.logout(this.props.auth)} style={{cursor:'pointer'}}>Log Out</a></li>
