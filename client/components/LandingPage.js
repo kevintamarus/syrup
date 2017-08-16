@@ -3,6 +3,7 @@ import NavBarLogin from './NavBarLogin';
 import HomePage from './HomePage';
 
 const LandingPage = ({auth}) => {
+  
   return (
     <div>
       <NavBarLogin auth={auth}/>

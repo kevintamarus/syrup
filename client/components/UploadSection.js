@@ -31,8 +31,8 @@ export default class UploadSection extends React.Component {
         this.setState({input: this.state.input});
         const imageUrl = this.state.input;
         const api = {
-            "app_key": process.env.APP_KEY,
-            "app_id": process.env.APP_ID
+            "app_key": 'c28a25655df2cf51169535b5c181b098',
+            "app_id": '1a26e2fe'
         };
         const body = {
             "image": imageUrl,
