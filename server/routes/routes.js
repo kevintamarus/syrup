@@ -20,7 +20,7 @@ router.get('/matches/percent/:subject_id', griffController.getMatchesByPercent);
 router.get('/match/:id/:subject_id', controller.verifyMatch);
 //upload photo
 router.post('/photos', controller.uploadUserPhotos);
-router.put('/updateProfile/:id', controller.updateProfile);
+router.put('/updateProfile/:authId', controller.updateProfile);
 router.get('/message/:userId', controller.retrieveFirstName);
 
 

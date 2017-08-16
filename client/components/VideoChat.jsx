@@ -28,8 +28,8 @@ class VideoChat extends Component {
     var video_out = document.getElementById("vid-box");
     var phone = window.phone = PHONE({
 	    number        : this.state.username || "Anonymous", // listen on username line else Anonymous
-	    publish_key   : '',
-	    subscribe_key : '',
+	    publish_key   : 'pub-c-a40f5193-3399-4420-8268-eaf76e1d8a15',
+	    subscribe_key : 'sub-c-51596d5e-824b-11e7-8979-5e3a640e5579',
     });	
     // phone.ready(function(){ form.username.style.background="#55ff5b"; });
     phone.receive(function(session){

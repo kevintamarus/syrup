@@ -106,11 +106,12 @@ class editProfile extends Component {
       "gallery_name": "SyrupPractice"
     };
     const api = {
-      "app_key": process.env.APP_KEY,
-      "app_id": process.env.APP_ID
+      "app_key": 'd542f1cb3b353507b79ddffb2305bb87',
+      "app_id": '05440b61'
     };
 
-
+    console.log(this.state);
+    console.log(localStorage.idTokenPayload);
     axios.all([
       axios.put(`/api/updateProfile/${localStorage.idTokenPayload}`, this.state),
       axios.post('https://api.kairos.com/enroll', body, {headers: api})
