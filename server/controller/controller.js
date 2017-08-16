@@ -4,11 +4,11 @@ const Model = require('../../db/models/model');
 
 module.exports = {
   addProfile: (req, res) => {
-    console.log('this is the req.body ', req.body.id)
+    console.log('this is the req.body ', req.body.authId)
     Model.User.findOrCreate({
-      where: {id: req.body.id}, defaults: {
-        id: req.body.id,
+      where: {email: req.body.email}, defaults: {
         email: req.body.email,
+        authId: req.body.authId,
         firstname: req.body.firstname,
         age: req.body.age,
         gender: req.body.gender,
@@ -70,7 +70,9 @@ module.exports = {
   },
 
   getProfile: (req, res) => {
-    Model.User.findById(req.params.id)
+    Model.User.find({
+      where: {authId: req.params.id}
+    })
     .then(response => {
       res.send(response);
     })
@@ -142,7 +144,7 @@ module.exports = {
       bio: req.body.bio,
       profilepic: req.body.profilepic,
       images: req.body.images
-    }, {where: {id: req.params.id}, returning: true})
+    }, {where: {authId: req.params.authId}, returning: true})
       .then(update => {
         res.status(202).send(update);
       })

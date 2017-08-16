@@ -2,6 +2,10 @@ const Sequelize = require('sequelize');
 const db = require('../index');
 
 const User = db.define('user', {
+  authId: {
+    type: Sequelize.TEXT,
+    allowNull: true
+  },
   email: {
     type: Sequelize.STRING,
     allowNull: false

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NavBar from './NavBar';
 
 class VideoChat extends Component {
   constructor(props) {
@@ -28,8 +29,8 @@ class VideoChat extends Component {
     var video_out = document.getElementById("vid-box");
     var phone = window.phone = PHONE({
 	    number        : this.state.username || "Anonymous", // listen on username line else Anonymous
-	    publish_key   : '',
-	    subscribe_key : '',
+	    publish_key   : 'pub-c-a40f5193-3399-4420-8268-eaf76e1d8a15',
+	    subscribe_key : 'sub-c-51596d5e-824b-11e7-8979-5e3a640e5579',
     });	
     // phone.ready(function(){ form.username.style.background="#55ff5b"; });
     phone.receive(function(session){
@@ -48,15 +49,17 @@ class VideoChat extends Component {
 
   render() {
     return (
-      <div className="video-chat-div">
+			<div className="intro-message">
+
+				<NavBar />
 
         <form name="loginForm" id="login" action="#" onSubmit={this.login}>
             <input type="text" name="username" id="username" placeholder="Pick a username!" onChange={this.handleUsername} />
-            <input type="submit" name="login_submit" value="Log In" />
+            <input type="submit" name="login_submit" value="Your Name!" />
         </form>
 
         <form name="callForm" id="call" action="#" onSubmit={this.makeCall}>
-          <input type="text" name="number" placeholder="Enter user to dial!" onChange={this.handleNumber} />
+          <input type="text" name="number" placeholder="Enter partner's name!" onChange={this.handleNumber} />
           <input type="submit" value="Call"/>
         </form>
 

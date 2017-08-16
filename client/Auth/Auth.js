@@ -32,7 +32,7 @@ export default class Auth {
       .then(({ data }) => {
         axios.post('/api/profile', {
           email: data.name,
-          id: data.sub
+          authId: data.sub
         })
         .then(res => {
         })
