@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 const express = require('express');
 const Model = require('../../db/models/model');
-const data = require('../../data');
 
 module.exports = {
   addProfile: (req, res) => {

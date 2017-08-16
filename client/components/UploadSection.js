@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import appId from '../../apiKey';
-import apiKey from '../../apiKey';
 import MatchesUploadSection from './MatchesUploadSection';
+import path from 'path';
+require('dotenv').config({
+  path: path.resolve(__dirname, '../../.env')
+});
 
 export default class UploadSection extends React.Component {
     constructor(props) {
@@ -29,8 +31,8 @@ export default class UploadSection extends React.Component {
         this.setState({input: this.state.input});
         const imageUrl = this.state.input;
         const api = {
-            "app_key": apiKey.apiKey,
-            "app_id": appId.appId
+            "app_key": process.env.APP_KEY,
+            "app_id": process.env.APP_ID
         };
         const body = {
             "image": imageUrl,
