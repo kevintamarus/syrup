@@ -3,6 +3,7 @@ import axios from 'axios';
 import request from 'superagent';
 import NavBar from './NavBar';
 import path from 'path';
+import GEO_API_KEY from '../../config/config';
 require('dotenv').config({
   path: path.resolve(__dirname, '../../.env')
 });
@@ -23,7 +24,9 @@ class editProfile extends Component {
       gender: '',
       age: '',
       uploadedProfileCloudinaryUrl: '',
-      uploadedFileCloudinaryUrl: ''
+      uploadedFileCloudinaryUrl: '',
+      latitude: 0,
+      longitude: 0
     }
 
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -33,6 +36,16 @@ class editProfile extends Component {
   }
 
   componentDidMount() {
+
+    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${GEO_API_KEY}`)
+    .then(data => {
+      console.log(data.data.location)
+      console.log(data.data.location.lat)
+      this.setState({latitude: data.data.location.lat})
+      this.setState({longitude: data.data.location.lng})
+    })
+    .catch(err => { if (err) {return console.error(err)} })
+
     this.dropzone1 = new Dropzone("div#my-dropzone1", { url: "/api/photos"});
     this.dropzone1.on('addedfile', file => {
       this.onProfileImageDrop([file]);
@@ -106,8 +119,8 @@ class editProfile extends Component {
       "gallery_name": "SyrupPractice"
     };
     const api = {
-      "app_key": 'd542f1cb3b353507b79ddffb2305bb87',
-      "app_id": '05440b61'
+      "app_key": 'c28a25655df2cf51169535b5c181b098',
+      "app_id": '1a26e2fe'
     };
 
     console.log(this.state);

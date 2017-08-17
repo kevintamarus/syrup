@@ -33,6 +33,14 @@ const User = db.define('user', {
   age: {
     type: Sequelize.INTEGER,
     allowNull: true
+  },
+  latitude: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  longitude: {
+    type: Sequelize.INTEGER,
+    allowNull: true
   }
 }, {
   timestamps: false
