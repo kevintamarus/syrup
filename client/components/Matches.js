@@ -10,7 +10,6 @@ export default class Matches extends React.Component {
       userId: localStorage.idTokenPayload,
       matches: []
     }
-    this.testing = this.testing.bind(this);
   }
 
   render() {
