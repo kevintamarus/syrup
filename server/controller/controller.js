@@ -143,7 +143,9 @@ module.exports = {
       gender: req.body.gender,
       bio: req.body.bio,
       profilepic: req.body.profilepic,
-      images: req.body.images
+      images: req.body.images,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude
     }, {where: {authId: req.params.authId}, returning: true})
       .then(update => {
         res.status(202).send(update);
