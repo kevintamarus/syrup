@@ -28,7 +28,6 @@ export default class MyMatch extends React.Component{
 			})
 	}
 
-
 	render(){
 		return (
 			<div className="col-sm-4 text-center match" onClick={this.renderProfile}>

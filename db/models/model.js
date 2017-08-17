@@ -2,6 +2,11 @@ const Sequelize = require('sequelize');
 const db = require('../index');
 
 const User = db.define('user', {
+  id: {
+    primaryKey: true,
+    type: Sequelize.TEXT,
+    allowNull: true
+  },
   authId: {
     type: Sequelize.TEXT,
     allowNull: true
@@ -33,6 +38,14 @@ const User = db.define('user', {
   age: {
     type: Sequelize.INTEGER,
     allowNull: true
+  },
+  latitude: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  longitude: {
+    type: Sequelize.INTEGER,
+    allowNull: true
   }
 }, {
   timestamps: false
@@ -56,7 +69,7 @@ const Message = db.define('message', {
   timestamps: false
 })
 
-User.belongsToMany(User, {as: 'matchee', through: Match, unique: false});
+User.belongsToMany(User, { as: 'matchee', through: Match, unique: false});
 Message.belongsTo(User, { as: 'user', through: Message, foreignKey: {name: 'userId', unique: false }})
 Message.belongsTo(User, { as: 'recipient', through: Message, foreignKey: {name: 'recipientId', unique: false }})
 

@@ -12,11 +12,23 @@ export default class UploadSection extends React.Component {
         this.state = {
             input: '',
             isMatching: false,
-            matches: []
+            matches: [],
+            latitude: 0,
+            longitude: 0
         }
-
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        axios.get(`http://localhost:8080/api/profile/${localStorage.idTokenPayload}`)
+        .then(({data}) => {
+          this.setState({latitude: data.latitude})
+          this.setState({longitude: data.longitude})
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     handleInputChange(event){
@@ -33,6 +45,7 @@ export default class UploadSection extends React.Component {
         const api = {
             "app_key": '78b2112b369d3016f72b1b5412122197',
             "app_id": '05440b61'
+
         };
         const body = {
             "image": imageUrl,
@@ -47,6 +60,9 @@ export default class UploadSection extends React.Component {
             .then(response => {
                 console.log(response.data.images[0].candidates)
                 this.setState({matches: response.data.images[0].candidates});
+                //take the greater between my latitude/longitude and theirs and subtract lesser from greater to get true distance
+                //results we're getting is from kairos, but we should be linking to our database
+                //just put their location
             })
             .catch(error => {
                 console.log(error);
