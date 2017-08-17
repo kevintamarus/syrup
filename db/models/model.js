@@ -2,6 +2,11 @@ const Sequelize = require('sequelize');
 const db = require('../index');
 
 const User = db.define('user', {
+  id: {
+    primaryKey: true,
+    type: Sequelize.TEXT,
+    allowNull: true
+  },
   authId: {
     type: Sequelize.TEXT,
     allowNull: true

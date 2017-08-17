@@ -6,7 +6,6 @@ export default class HomePage extends React.Component {
 	}
 
 	render(){
-		console.log('helloooooo')
 		return(
 			<div className="intro-header">
         		<div className="container">

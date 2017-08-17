@@ -39,8 +39,6 @@ class editProfile extends Component {
 
     axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${GEO_API_KEY}`)
     .then(data => {
-      console.log(data.data.location)
-      console.log(data.data.location.lat)
       this.setState({latitude: data.data.location.lat})
       this.setState({longitude: data.data.location.lng})
     })
