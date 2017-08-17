@@ -12,6 +12,7 @@ export default class Match extends React.Component{
 			age: 25,
 			profilepic: '',
 			own_id: localStorage.idTokenPayload,
+			userId: null,
 			matched: false
 		}
 		this.addMatch = this.addMatch.bind(this);
@@ -19,24 +20,28 @@ export default class Match extends React.Component{
 	}
 
 	componentDidMount(){
-		axios.all([
-      axios.get(`api/matches/percent/${this.props.match.subject_id}`),
-      axios.get(`api/match/${this.state.id}/${this.state.own_id}`)
-    ])
-    .then(axios.spread((res, match) => {
-      this.setState({
-				id: res.data.id,
-				firstname: res.data.firstname,
-				age: res.data.age,
-				profilepic: res.data.profilepic,
-				matched: match.data
+		axios.get(`api/matches/percent/${this.props.match.subject_id}`)
+			.then(({ data }) => {
+				this.setState({
+					id: data.id,
+					firstname: data.firstname,
+					age: data.age,
+					profilepic: data.profilepic
+				})
 			})
-    }))
-    .catch(err => { 
-      return console.error(err) 
-    });
+			.then(() => {
+				axios.get(`api/user/${this.state.own_id}`)
+					.then(({ data }) => {
+						this.setState({userId: data.id})
+						axios.get(`api/match/${this.state.id}/${data.id}`)
+							.then(({ data }) => this.setState({matched: data}))
+							.catch(err => console.error(err))
+					})
+					.catch(err => console.error(err))
+			})
+			.catch(err => console.err(err))
 	}
-
+	
 	isMatched() {
 		if (this.state.matched) {
 			return <button className="btn-primary">Connected!</button>
@@ -46,7 +51,8 @@ export default class Match extends React.Component{
 	}
 
 	addMatch() {
-		axios.post(`api/match/${this.state.id}/${this.state.own_id}`)
+		console.log(this.state);
+		axios.post(`api/match/${this.state.id}/${this.state.userId}`)
 		.then(response => {
 			console.log('Connection added');
 			this.setState({

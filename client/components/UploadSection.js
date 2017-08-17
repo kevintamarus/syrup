@@ -31,7 +31,7 @@ export default class UploadSection extends React.Component {
         this.setState({input: this.state.input});
         const imageUrl = this.state.input;
         const api = {
-            "app_key": 'd542f1cb3b353507b79ddffb2305bb87',
+            "app_key": '78b2112b369d3016f72b1b5412122197',
             "app_id": '05440b61'
         };
         const body = {
@@ -45,6 +45,7 @@ export default class UploadSection extends React.Component {
         }
         axios.post('https://api.kairos.com/recognize', body, {headers: api})
             .then(response => {
+                console.log(response.data.images[0].candidates)
                 this.setState({matches: response.data.images[0].candidates});
             })
             .catch(error => {
