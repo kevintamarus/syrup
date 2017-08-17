@@ -6,11 +6,20 @@ class NavBar extends Component {
   constructor(props){
     super(props);
     this.logout = this.logout.bind(this);
+    this.state = {
+      newMatches: true,
+      newMessages: true,
+      newChat: true
+    }
   }
 
   logout(auth) {
     console.log('youre in logout')
     auth.logout();
+  }
+
+  handleChange(key){
+    this.setState({[key] : !this.state[key]});
   }
   
   render() {
@@ -28,11 +37,17 @@ class NavBar extends Component {
           </div>
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav navbar-right">
-              <li><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
+              {this.state.newMatches ?
+              <li className="new-matches" ><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li> 
+              : null}
               <li><Link to='/matches'>Matches</Link></li>
-              <li><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
+              {this.state.newMessages ?
+              <li className="new-messages"><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
+              : null}
               <li><Link to='/messages'>Messages</Link></li>
-              <li><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
+              {this.state.newChat ?
+              <li className="new-chat"><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
+              : null}
               <li><Link to='/videochat'>Video Chat</Link></li>
               <li><Link to='/upload'>Upload</Link></li>
               <li><Link to='/profile'>Profile</Link></li>
