@@ -29,9 +29,8 @@ export default class Match extends React.Component{
 					firstname: data.firstname,
 					age: data.age,
 					profilepic: data.profilepic,
-					matched: match.data,
-					latitude: res.data.latitude,
-					longitude: res.data.longitude
+					latitude: data.latitude,
+					longitude: data.longitude
 				})
 			})
 			.then(() => {
