@@ -20,16 +20,16 @@ export default class UploadSection extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
-        axios.get(`http://localhost:8080/api/profile/${localStorage.idTokenPayload}`)
-        .then(({data}) => {
-          this.setState({latitude: data.latitude})
-          this.setState({longitude: data.longitude})
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }
+    // componentDidMount() {
+    //     axios.get(`http://localhost:8080/api/profile/${localStorage.idTokenPayload}`)
+    //     .then(({data}) => {
+    //       this.setState({latitude: data.latitude})
+    //       this.setState({longitude: data.longitude})
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+    // }
 
     handleInputChange(event){
         event.preventDefault();
@@ -43,8 +43,8 @@ export default class UploadSection extends React.Component {
         this.setState({input: this.state.input});
         const imageUrl = this.state.input;
         const api = {
-            "app_key": '78b2112b369d3016f72b1b5412122197',
-            "app_id": '05440b61'
+            "app_key": 'c28a25655df2cf51169535b5c181b098',
+            "app_id": '1a26e2fe'
 
         };
         const body = {
