@@ -2,7 +2,6 @@ import React from 'react';
 import NavBar from './NavBar';
 import axios from 'axios';
 import MatchesResults from './MatchesResults'
-import GEO_API_KEY from '../../config/config'
 
 export default class Matches extends React.Component {
   constructor(props) {
@@ -11,15 +10,19 @@ export default class Matches extends React.Component {
       userId: localStorage.idTokenPayload,
       matches: []
     }
-    this.testing = this.testing.bind(this);
   }
 
   componentDidMount(){
-    this.testing();
-    axios.get(`/api/matches/${this.state.userId}`)
-      .then(data => {
-        this.setState({matches: data.data});
-        console.log('MATCHES', this.state.matches);
+    axios.get(`/api/user/${this.state.userId}`)
+      .then(({ data }) => {
+        axios.get(`/api/matches/${data.id}`)
+          .then(data => {
+            this.setState({matches: data.data});
+            console.log('MATCHES', this.state.matches);
+          })
+          .catch(err => {
+            console.log(err);
+          })
       })
       .catch(err => {
         console.log(err);

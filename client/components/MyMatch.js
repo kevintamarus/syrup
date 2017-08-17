@@ -17,7 +17,7 @@ export default class MyMatch extends React.Component{
 	}
 
 	componentDidMount(){
-		axios.get(`/api/profile/${this.state.id}`)
+		axios.get(`/api/matchProfile/${this.state.id}`)
 			.then(data => {
 				console.log('PROFILE INFO: ', data.data);
 				this.setState({
@@ -27,7 +27,6 @@ export default class MyMatch extends React.Component{
 				})
 			})
 	}
-
 
 	render(){
 		return (
