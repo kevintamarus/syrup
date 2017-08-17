@@ -12,8 +12,10 @@ router.post('/profile', controller.addProfile);
 router.post('/message/:userId/:recipientId', controller.saveMessages);
 router.get('/message/:userId/:recipientId', controller.getMessages);
 router.get('/users/:firstname', controller.getUserId)
+router.get('/user/:authId', controller.getUser)
 // get individual profile
-router.get('/profile/:id', controller.getProfile);
+router.get('/profile/:authId', controller.getProfile);
+router.get('/matchProfile/:id', controller.getProfileById);
 router.get('/profile/get/:id', controller.renderClickedProfile);
 router.get('/matches/percent/:subject_id', griffController.getMatchesByPercent);
 // verify match

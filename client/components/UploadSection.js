@@ -43,8 +43,9 @@ export default class UploadSection extends React.Component {
         this.setState({input: this.state.input});
         const imageUrl = this.state.input;
         const api = {
-            "app_key": 'c28a25655df2cf51169535b5c181b098',
-            "app_id": '1a26e2fe'
+            "app_key": '78b2112b369d3016f72b1b5412122197',
+            "app_id": '05440b61'
+
         };
         const body = {
             "image": imageUrl,
@@ -57,6 +58,7 @@ export default class UploadSection extends React.Component {
         }
         axios.post('https://api.kairos.com/recognize', body, {headers: api})
             .then(response => {
+                console.log(response.data.images[0].candidates)
                 this.setState({matches: response.data.images[0].candidates});
                 //take the greater between my latitude/longitude and theirs and subtract lesser from greater to get true distance
                 //results we're getting is from kairos, but we should be linking to our database

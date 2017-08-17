@@ -12,35 +12,36 @@ export default class Match extends React.Component{
 			age: 25,
 			profilepic: '',
 			own_id: localStorage.idTokenPayload,
-			matched: false,
-			latitude: null,
-			longitude: null
+			userId: null,
+			matched: false
 		}
 		this.addMatch = this.addMatch.bind(this);
 		this.isMatched = this.isMatched.bind(this);
 	}
 
 	componentDidMount(){
-		axios.all([
-      axios.get(`api/matches/percent/${this.props.match.subject_id}`),
-      axios.get(`api/match/${this.state.id}/${this.state.own_id}`)
-    ])
-    .then(axios.spread((res, match) => {
-      this.setState({
-				id: res.data.id,
-				firstname: res.data.firstname,
-				age: res.data.age,
-				profilepic: res.data.profilepic,
-				matched: match.data,
-				latitude: res.data.latitude,
-				longitude: res.data.longitude
+		axios.get(`api/matches/percent/${this.props.match.subject_id}`)
+			.then(({ data }) => {
+				this.setState({
+					id: data.id,
+					firstname: data.firstname,
+					age: data.age,
+					profilepic: data.profilepic
+				})
 			})
-    }))
-    .catch(err => { 
-      return console.error(err) 
-    });
+			.then(() => {
+				axios.get(`api/user/${this.state.own_id}`)
+					.then(({ data }) => {
+						this.setState({userId: data.id})
+						axios.get(`api/match/${this.state.id}/${data.id}`)
+							.then(({ data }) => this.setState({matched: data}))
+							.catch(err => console.error(err))
+					})
+					.catch(err => console.error(err))
+			})
+			.catch(err => console.err(err))
 	}
-
+	
 	isMatched() {
 		if (this.state.matched) {
 			return <button className="btn-primary">Connected!</button>
@@ -50,7 +51,8 @@ export default class Match extends React.Component{
 	}
 
 	addMatch() {
-		axios.post(`api/match/${this.state.id}/${this.state.own_id}`)
+		console.log(this.state);
+		axios.post(`api/match/${this.state.id}/${this.state.userId}`)
 		.then(response => {
 			console.log('Connection added');
 			this.setState({
@@ -65,12 +67,10 @@ export default class Match extends React.Component{
 		return (
 			<div className="col-sm-4 text-center match" onClick={this.renderProfile}>
 				<h2>{this.state.firstname}, {this.state.age}</h2>
-				<h2>Latitude: {this.state.latitude}, Longitude: {this.state.longitude}</h2>
 				<a href={`/${this.state.id}`}><img src={this.state.profilepic} className="match-pic"/></a>
 				<h3>{Math.round(100 * this.props.match.confidence + 10)}% Match</h3>
 				{this.isMatched()}
 			</div>
-			
 		);
 	}
 }

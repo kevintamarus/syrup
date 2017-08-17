@@ -69,9 +69,33 @@ module.exports = {
     })
   },
 
+  getUser: (req, res) => {
+    Model.User.find({
+      where:{
+        authId: req.params.authId
+      }
+    })
+    .then(data=> {
+      res.status(200).send(data)
+    })
+    .catch(err => {
+      res.status(404).send(err)
+    })
+  },
+
   getProfile: (req, res) => {
     Model.User.find({
-      where: {authId: req.params.id}
+      where: {authId: req.params.authId}
+    })
+    .then(response => {
+      res.send(response);
+    })
+    .catch(err => { if (err) {console.error(err) } })
+  },
+
+  getProfileById: (req, res) => {
+    Model.User.find({
+      where: {id: req.params.id}
     })
     .then(response => {
       res.send(response);

@@ -12,6 +12,20 @@ export default class Matches extends React.Component {
     }
   }
 
+  componentDidMount(){
+    axios.get(`/api/user/${this.state.userId}`)
+      .then(({ data }) => {
+        axios.get(`/api/matches/${data.id}`)
+          .then(data => {
+            this.setState({matches: data.data});
+            console.log('MATCHES', this.state.matches);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      })
+  }
+
   render() {
     return (
       <div className="intro-message">
