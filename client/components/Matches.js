@@ -24,6 +24,8 @@ export default class Matches extends React.Component {
       .catch(err => {
         console.log(err);
       })
+
+    //socket emit to set state of newMatches to false
   }
 
   testing() {
