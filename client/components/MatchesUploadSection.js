@@ -1,5 +1,6 @@
 import React from 'react';
 import Match from './Match';
+import { withGoogleMap, GoogleMap, Marker } from "react-google-maps";
 
 export default class MatchesUploadSection extends React.Component {
 	constructor(props){
@@ -18,7 +19,14 @@ export default class MatchesUploadSection extends React.Component {
 		            </div>
 		            	<div className="row">
 		            		{this.props.matches.map((match, i) => 
-		            			(<Match match={match} history={this.props.history} key={i}/>)
+		            			(<Match 			
+								containerElement={
+          <div style={{ height: `200px` }} />
+        }
+        mapElement={
+          <div style={{ height: `200px` }} />
+        } 
+		match={match} history={this.props.history} key={i}/>)
 		            		)}
 		            	</div>
 		        </div>

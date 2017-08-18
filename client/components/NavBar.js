@@ -1,66 +1,66 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import auth from 'auth0-js';
-import socket from 'socket-io';
+import socket from 'socket.io';
 
 class NavBar extends Component {
   constructor(props){
     super(props);
     this.logout = this.logout.bind(this);
-    this.matchNotification = this.matchNotification.bind(this);
-    this.messageNotification = this.messageNotification.bind(this);
-    this.chatNotification = this.chatNotification.bind(this);
-    this.matchViewed = this.matchViewed.bind(this);
-    this.messageViewed = this.messageViewed.bind(this);
-    this.chatViewed = this.chatViewed.bind(this);
+    // this.matchNotification = this.matchNotification.bind(this);
+    // this.messageNotification = this.messageNotification.bind(this);
+    // this.chatNotification = this.chatNotification.bind(this);
+    // this.matchViewed = this.matchViewed.bind(this);
+    // this.messageViewed = this.messageViewed.bind(this);
+    // this.chatViewed = this.chatViewed.bind(this);
     this.state = {
-      newMatch: true,
-      newMessage: true,
-      newChat: true
+      // newMatch: true,
+      // newMessage: true,
+      // newChat: true
     }
   }
 
-  componentDidMount() {
-    socket.on('newMatch', this.matchNotification);
-    socket.on('newMessage', this.messageNotification);
-    socket.on('newChat', this.chatNotification);
-    socket.on('matchViewed', this.matchViewed);
-    socket.on('messageViewed', this.messageViewed);
-    socket.on('chatViewed', this.chatViewed);
-  }
+  // componentDidMount() {
+  //   socket.on('newMatch', this.matchNotification);
+  //   socket.on('newMessage', this.messageNotification);
+  //   socket.on('newChat', this.chatNotification);
+  //   socket.on('matchViewed', this.matchViewed);
+  //   socket.on('messageViewed', this.messageViewed);
+  //   socket.on('chatViewed', this.chatViewed);
+  // }
 
-  matchNotification() {
-    this.setState({newMatch: true});
-  }
+  // matchNotification() {
+  //   this.setState({newMatch: true});
+  // }
 
-  messageNotification() {
-    this.setState({newMessage: true});
-  }
+  // messageNotification() {
+  //   this.setState({newMessage: true});
+  // }
 
-  chatNotification() {
-    this.setState({newChat: true});
-  }
+  // chatNotification() {
+  //   this.setState({newChat: true});
+  // }
 
-  matchViewed() {
-    this.setState({newMatch: false});
-  }
+  // matchViewed() {
+  //   this.setState({newMatch: false});
+  // }
 
-  messagesViewed() {
-    this.setState({newMessage: false});
-  }
+  // messageViewed() {
+  //   this.setState({newMessage: false});
+  // }
 
-  chatViewed() {
-    this.setState({newChat: false});
-  }
+  // chatViewed() {
+  //   this.setState({newChat: false});
+  // }
 
   logout(auth) {
     console.log('youre in logout')
     auth.logout();
   }
 
-  handleChange(key){
-    this.setState({[key] : !this.state[key]});
-  }
+  // handleChange(key){
+  //   this.setState({[key] : !this.state[key]});
+  // }
   
   render() {
     return (

@@ -40,11 +40,15 @@ export default class Matches extends React.Component {
   }
 
   render() {
+    console.log(Map)
     return (
       <div className="intro-message">
         <NavBar />
+        
         <MatchesResults matches={this.state.matches} history={this.props.history} />
+
       </div>
     );
   }
 }
+
