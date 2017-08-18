@@ -1,7 +1,8 @@
 import React from 'react';
 import NavBar from './NavBar';
 import axios from 'axios';
-import MatchesResults from './MatchesResults'
+import MatchesResults from './MatchesResults';
+import io from 'socket.io-client';
 
 export default class Matches extends React.Component {
   constructor(props) {
@@ -27,8 +28,10 @@ export default class Matches extends React.Component {
       .catch(err => {
         console.log(err);
       })
-
-    //socket emit to set state of newMatches to false
+    const socket = io();
+    socket.emit('match-viewed', function(data) {
+      console.log(data);
+    })
   }
 
   testing() {

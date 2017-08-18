@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
+import io from 'socket.io-client';
 
 class VideoChat extends Component {
   constructor(props) {
@@ -12,6 +13,13 @@ class VideoChat extends Component {
     this.makeCall = this.makeCall.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handleNumber = this.handleNumber.bind(this);
+  }
+
+  componentDidMount() {
+    const socket = io();
+    socket.emit('videochat-viewed', function(data) {
+      console.log(data);
+    })
   }
 
   handleUsername(e) {
