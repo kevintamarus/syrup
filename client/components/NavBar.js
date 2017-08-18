@@ -19,40 +19,7 @@ class NavBar extends Component {
       // newChat: true
     }
   }
-
-  // componentDidMount() {
-  //   socket.on('newMatch', this.matchNotification);
-  //   socket.on('newMessage', this.messageNotification);
-  //   socket.on('newChat', this.chatNotification);
-  //   socket.on('matchViewed', this.matchViewed);
-  //   socket.on('messageViewed', this.messageViewed);
-  //   socket.on('chatViewed', this.chatViewed);
-  // }
-
-  // matchNotification() {
-  //   this.setState({newMatch: true});
-  // }
-
-  // messageNotification() {
-  //   this.setState({newMessage: true});
-  // }
-
-  // chatNotification() {
-  //   this.setState({newChat: true});
-  // }
-
-  // matchViewed() {
-  //   this.setState({newMatch: false});
-  // }
-
-  // messageViewed() {
-  //   this.setState({newMessage: false});
-  // }
-
-  // chatViewed() {
-  //   this.setState({newChat: false});
-  // }
-
+  
   logout(auth) {
     console.log('youre in logout')
     auth.logout();
@@ -85,10 +52,7 @@ class NavBar extends Component {
               <li className="new-messages"><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
               : null}
               <li><Link to='/messages'>Messages</Link></li>
-              {this.state.newChat ?
-              <li className="new-chat"><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
-              : null}
-              <li><Link to='/videochat'>Video Chat</Link></li>
+              <li><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
               <li><Link to='/upload'>Upload</Link></li>
               <li><Link to='/profile'>Profile</Link></li>
               <li><a onClick={() => this.logout(this.props.auth)} style={{cursor:'pointer'}}>Log Out</a></li>

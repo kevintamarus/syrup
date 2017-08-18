@@ -3,6 +3,7 @@ import axios from 'axios';
 import history from '../history';
 import { Redirect } from 'react-router-dom';
 import Map from './Map'
+import { Link } from 'react-router-dom';
 
 export default class MyMatch extends React.Component{
 	constructor(props){
@@ -18,6 +19,7 @@ export default class MyMatch extends React.Component{
 	}
 
 	componentDidMount(){
+		console.log('REEEEEEEEEEEEEE', this.props.userId);
 		axios.get(`/api/matchProfile/${this.state.id}`)
 			.then(data => {
 				console.log('PROFILE INFO: ', data.data);
@@ -35,6 +37,7 @@ export default class MyMatch extends React.Component{
 				
 				<h2>{this.state.firstname}, {this.state.age}</h2>
 				<a href={`/${this.state.id}`}><img src={this.state.profilepic} className="match-pic"/></a>
+				<Link to={`/videochat/${this.props.userId}/${this.state.id}`}><button>Click to start Video chat!</button></Link>
 			</div>
 		);
 	}

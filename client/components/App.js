@@ -33,7 +33,7 @@ const App = () => {
       <Route exact path='/profile' component={ownProfile}/>
       <Route exact path='/matches' component={Matches}/>
       <Route exact path='/messages' component={Messages}/>
-      <Route exact path='/videochat' component={VideoChat}/>
+      <Route exact path='/videochat/:userId/:matchId' component={VideoChat}/>
       <Route exact path='/editProfile' component={editProfile}/>
       <Route path='/:id' component={ProfilePage}/>
     </Switch>

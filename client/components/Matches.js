@@ -7,14 +7,16 @@ export default class Matches extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: localStorage.idTokenPayload,
-      matches: []
+      authId: localStorage.idTokenPayload,
+      matches: [],
+      userId: null
     }
   }
 
   componentDidMount(){
-    axios.get(`/api/user/${this.state.userId}`)
+    axios.get(`/api/user/${this.state.authId}`)
       .then(({ data }) => {
+        this.setState({ userId: data.id })
         axios.get(`/api/matches/${data.id}`)
           .then(data => {
             this.setState({matches: data.data});
@@ -44,9 +46,7 @@ export default class Matches extends React.Component {
     return (
       <div className="intro-message">
         <NavBar />
-        
-        <MatchesResults matches={this.state.matches} history={this.props.history} />
-
+        <MatchesResults matches={this.state.matches} history={this.props.history} userId={this.state.userId} />
       </div>
     );
   }
