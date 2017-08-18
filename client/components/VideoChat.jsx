@@ -42,7 +42,7 @@ class VideoChat extends Component {
 
   makeCall(e) {
     e.preventDefault();
-    if (!window.phone) alert("Login First!");
+    if (!window.phone) alert("Enter your name first!");
     else phone.dial(this.state.number);
     return false;
   }
