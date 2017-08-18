@@ -19,40 +19,7 @@ class NavBar extends Component {
       // newChat: true
     }
   }
-
-  // componentDidMount() {
-  //   socket.on('newMatch', this.matchNotification);
-  //   socket.on('newMessage', this.messageNotification);
-  //   socket.on('newChat', this.chatNotification);
-  //   socket.on('matchViewed', this.matchViewed);
-  //   socket.on('messageViewed', this.messageViewed);
-  //   socket.on('chatViewed', this.chatViewed);
-  // }
-
-  // matchNotification() {
-  //   this.setState({newMatch: true});
-  // }
-
-  // messageNotification() {
-  //   this.setState({newMessage: true});
-  // }
-
-  // chatNotification() {
-  //   this.setState({newChat: true});
-  // }
-
-  // matchViewed() {
-  //   this.setState({newMatch: false});
-  // }
-
-  // messageViewed() {
-  //   this.setState({newMessage: false});
-  // }
-
-  // chatViewed() {
-  //   this.setState({newChat: false});
-  // }
-
+  
   logout(auth) {
     console.log('youre in logout')
     auth.logout();
