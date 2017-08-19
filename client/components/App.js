@@ -31,7 +31,7 @@ const store = createStore(reducers)
 
 const App = () => {
 	if(auth.isAuthenticated()) {
-}
+  }
 
 	return (
 

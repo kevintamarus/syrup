@@ -9,17 +9,16 @@ export default class Matches extends React.Component {
     super(props);
     this.testButtonOn = this.testButtonOn.bind(this);
     this.state = {
-      userId: localStorage.idTokenPayload,
+      authId: localStorage.idTokenPayload,
       matches: [],
-      socket: null
+      userId: null
     }
   }
 
   componentDidMount(){
-    const socket = io();
-    this.setState({socket: socket});
-    axios.get(`/api/user/${this.state.userId}`)
+    axios.get(`/api/user/${this.state.authId}`)
       .then(({ data }) => {
+        this.setState({ userId: data.id })
         axios.get(`/api/matches/${data.id}`)
           .then(data => {
             this.setState({matches: data.data});
@@ -50,12 +49,13 @@ export default class Matches extends React.Component {
   }
 
   render() {
+    console.log(Map)
     return (
       <div className="intro-message">
         <NavBar />
-        <MatchesResults matches={this.state.matches} history={this.props.history} />
-        <button onClick={this.testButtonOn}>Test Button On</button>
+        <MatchesResults matches={this.state.matches} history={this.props.history} userId={this.state.userId} />
       </div>
     );
   }
 }
+

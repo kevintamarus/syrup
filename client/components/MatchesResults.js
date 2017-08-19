@@ -20,7 +20,7 @@ export default class MatchesResults extends React.Component {
 		            </div>
 		            	<div className="row">
 		            		{this.props.matches.map((match, i) => 
-		            			(<MyMatch match={match} history={this.props.history} key={i}/>)
+		            			(<MyMatch match={match} history={this.props.history} key={i} userId={this.props.userId} />)
 		            		)}
 		            	</div>
 		        </div>

@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import NavBar from './NavBar';
 import io from 'socket.io-client';
 
+
 class VideoChat extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      authId: localStorage.idTokenPayload,
       username: '',
-      number: ''
+      number: '',
+      user: this.props.match.params.userId,
+      match: this.props.match.params.matchId
     }
-    this.login = this.login.bind(this);
     this.makeCall = this.makeCall.bind(this);
-    this.handleUsername = this.handleUsername.bind(this);
-    this.handleNumber = this.handleNumber.bind(this);
+    this.endCall = this.endCall.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +38,7 @@ class VideoChat extends Component {
     form.preventDefault();
     var video_out = document.getElementById("vid-box");
     var phone = window.phone = PHONE({
-	    number        : this.state.username || "Anonymous", // listen on username line else Anonymous
+	    number        : this.state.user,
 	    publish_key   : 'pub-c-f2176993-288c-4e3b-b885-c7d2439409d3',
 	    subscribe_key : 'sub-c-5489ae3c-8375-11e7-9034-1e9edc6dd7f6',
     });	
@@ -45,14 +47,17 @@ class VideoChat extends Component {
         session.connected(function(session) { video_out.appendChild(session.video); });
         session.ended(function(session) { video_out.innerHTML=''; });
     });
-    return false; 	// So the form does not submit.
   }
 
   makeCall(e) {
     e.preventDefault();
-    if (!window.phone) alert("Login First!");
-    else phone.dial(this.state.number);
-    return false;
+    if (!window.phone) alert("Enter your name first!");
+    else phone.dial(this.state.match);
+  }
+
+  endCall() {
+    var ctrl = window.ctrl = CONTROLLER(phone);
+    ctrl.hangup();
   }
 
   render() {
@@ -61,18 +66,12 @@ class VideoChat extends Component {
 
 				<NavBar />
 
-        <form name="loginForm" id="login" action="#" onSubmit={this.login}>
-            <input type="text" name="username" id="username" placeholder="Pick a username!" onChange={this.handleUsername} />
-            <input type="submit" name="login_submit" value="Your Name!" />
-        </form>
-
-        <form name="callForm" id="call" action="#" onSubmit={this.makeCall}>
-          <input type="text" name="number" placeholder="Enter partner's name!" onChange={this.handleNumber} />
-          <input type="submit" value="Call"/>
-        </form>
-
         <div id="vid-box"></div>
-
+        <div className="btn-holder">
+          <button className="startBtn" onClick={this.makeCall}>Start call</button>
+          <button className="stopBtn" onClick={this.endCall}>End call</button>
+        </div>
+        
       </div>
     );
   }
