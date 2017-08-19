@@ -48,34 +48,34 @@ io.on('connection', socket => {
     io.sockets.emit('chat message', msg);
   })
 
-  socket.on('new-match', function(data) {
+  socket.on('new-match', function() {
     console.log('setting match notification to true');
-    socket.emit('newMatch', {data: 'data'});
+    io.emit('newMatch');
   })
 
-  socket.on('new-message', function(data) {
+  socket.on('new-message', function() {
     console.log('setting message notification to true');
-    socket.emit('newMessage', {data: 'data'});
+    io.emit('newMessage');
   })
 
-  socket.on('new-videochat', function(data) {
+  socket.on('new-videochat', function() {
     console.log('setting video chat notification to true');
-    socket.emit('newVideoChat', {data: 'data'});
+    io.emit('newVideoChat');
   })
 
-  socket.on('match-viewed', function(data) {
+  socket.on('match-viewed', function() {
     console.log('setting match notification to false');
-    socket.emit('matchViewed', {data: 'data'});
+    io.emit('matchViewed');
   })
 
-  socket.on('message-viewed', function(data) {
+  socket.on('message-viewed', function() {
     console.log('setting message notification to false');
-    socket.emit('messageViewed', {data: 'data'});
+    io.emit('messageViewed');
   })
 
-  socket.on('videochat-viewed', function(data) {
+  socket.on('videochat-viewed', function() {
     console.log('setting video chat notification to false');
-    socket.emit('videoChatViewed', {data: 'data'});
+    io.emit('videoChatViewed');
   })
 
 })

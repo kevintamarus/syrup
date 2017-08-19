@@ -3,11 +3,28 @@ import NavBar from './NavBar';
 import axios from 'axios';
 import MatchesResults from './MatchesResults';
 import io from 'socket.io-client';
+import { connect } from 'react-redux';
 
-export default class Matches extends React.Component {
+const mapStateToProps = (state) => {
+	return {
+    matchNotification: state.matchNotificationReducer.matchNotification
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setMatchNotification(isTrue) {
+			dispatch({
+				type: 'SET_MATCH',
+				payload: isTrue
+      })
+    }
+  }
+}
+
+class Matches extends React.Component {
   constructor(props) {
     super(props);
-    this.testButtonOn = this.testButtonOn.bind(this);
     this.state = {
       authId: localStorage.idTokenPayload,
       matches: [],
@@ -31,6 +48,8 @@ export default class Matches extends React.Component {
       .catch(err => {
         console.log(err);
       })
+
+    this.props.setMatchNotification(false);
   }
 
   testing() {
@@ -39,13 +58,6 @@ export default class Matches extends React.Component {
       console.log(response.data.location)
     })
     .catch(err => { if (err) {return console.error(err)} })
-  }
-
-  testButtonOn() {
-    let socket = this.state.socket;
-    socket.emit('new-match', function(data) {
-    console.log('message emitted');
-    })
   }
 
   render() {
@@ -59,3 +71,4 @@ export default class Matches extends React.Component {
   }
 }
 
+export default connect(mapStateToProps, mapDispatchToProps)(Matches);

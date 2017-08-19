@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import NavBar from './NavBar';
 import io from 'socket.io-client';
+import { connect } from 'react-redux';
 
+const mapStateToProps = (state) => {
+	return {
+    videoChatNotification: state.videoChatNotificationReducer.videoChatNotification,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+    setVideoChatNotification(isTrue) {
+			dispatch({
+				type: 'SET_VIDEOCHAT',
+				payload: isTrue
+			})
+		}
+  }
+}
 
 class VideoChat extends Component {
   constructor(props) {
@@ -19,9 +36,7 @@ class VideoChat extends Component {
 
   componentDidMount() {
     const socket = io();
-    socket.emit('videochat-viewed', function(data) {
-      console.log(data);
-    })
+    this.props.setVideoChatNotification(false);
   }
 
   handleUsername(e) {
@@ -77,4 +92,4 @@ class VideoChat extends Component {
   }
 }
 
-export default VideoChat;
+export default connect(mapStateToProps, mapDispatchToProps)(VideoChat);

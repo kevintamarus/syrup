@@ -4,8 +4,26 @@ import NavBar from '../NavBar';
 import MatchList from './MatchList';
 import SocketIsockOClient from 'socket.io-client';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
-export default class Messages extends React.Component {
+const mapStateToProps = (state) => {
+	return {
+    messageNotification: state.messageNotificationReducer.messageNotification,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+    setMessageNotification(isTrue) {
+			dispatch({
+				type: 'SET_MESSAGE',
+				payload: isTrue
+			})
+    }
+  }
+}
+
+class Messages extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -122,3 +140,5 @@ export default class Messages extends React.Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messages);
