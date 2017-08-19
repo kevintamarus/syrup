@@ -7,13 +7,17 @@ import io from 'socket.io-client';
 export default class Matches extends React.Component {
   constructor(props) {
     super(props);
+    this.testButtonOn = this.testButtonOn.bind(this);
     this.state = {
       userId: localStorage.idTokenPayload,
-      matches: []
+      matches: [],
+      socket: null
     }
   }
 
   componentDidMount(){
+    const socket = io();
+    this.setState({socket: socket});
     axios.get(`/api/user/${this.state.userId}`)
       .then(({ data }) => {
         axios.get(`/api/matches/${data.id}`)
@@ -28,10 +32,6 @@ export default class Matches extends React.Component {
       .catch(err => {
         console.log(err);
       })
-    const socket = io();
-    socket.emit('match-viewed', function(data) {
-      console.log(data);
-    })
   }
 
   testing() {
@@ -42,11 +42,19 @@ export default class Matches extends React.Component {
     .catch(err => { if (err) {return console.error(err)} })
   }
 
+  testButtonOn() {
+    let socket = this.state.socket;
+    socket.emit('new-match', function(data) {
+    console.log('message emitted');
+    })
+  }
+
   render() {
     return (
       <div className="intro-message">
         <NavBar />
         <MatchesResults matches={this.state.matches} history={this.props.history} />
+        <button onClick={this.testButtonOn}>Test Button On</button>
       </div>
     );
   }

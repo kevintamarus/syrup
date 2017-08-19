@@ -48,7 +48,7 @@ export default class Messages extends React.Component {
         }
       })
 
-    this.state.socket.emit('message-viewed', function(data) {
+    this.socket.emit('message-viewed', function(data) {
       console.log(data);
     })
   }

@@ -2,6 +2,39 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import auth from 'auth0-js';
 import io from 'socket.io-client';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+	return {
+    matchNotification: state.matchNotificationReducer.matchNotification,
+    messageNotification: state.messageNotificationReducer.messageNotification,
+    videoChatNotification: state.videoChatNotificationReducer.videoChatNotification,
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setMatchNotification(isTrue) {
+			dispatch({
+				type: 'SET_MATCH',
+				payload: isTrue
+			})
+    },
+    setMessageNotification(isTrue) {
+			dispatch({
+				type: 'SET_MESSAGE',
+				payload: isTrue
+			})
+    },
+    setVideoChatNotification(isTrue) {
+			dispatch({
+				type: 'SET_VIDEOCHAT',
+				payload: isTrue
+			})
+		}
+  }
+  
+}
 
 class NavBar extends Component {
   constructor(props){
@@ -13,12 +46,9 @@ class NavBar extends Component {
     this.matchViewed = this.matchViewed.bind(this);
     this.messageViewed = this.messageViewed.bind(this);
     this.videoChatViewed = this.videoChatViewed.bind(this);
-    // this.testButtonOn = this.testButtonOn.bind(this);
-    // this.testButtonOff = this.testButtonOff.bind(this);
+    this.testButtonOn = this.testButtonOn.bind(this);
+    this.testButtonOff = this.testButtonOff.bind(this);
     this.state = {
-      newMatch: false,
-      newMessage: false,
-      newVideoChat: false,
       socket: null
     }
   }
@@ -35,41 +65,42 @@ class NavBar extends Component {
     socket.on('videoChatViewed', this.videoChatViewed);
   }
 
-  // testButtonOn() {
-  //   this.state.socket.emit('new-videochat', function(data) {
-  //     console.log(data);
-  //   })
-  // }
+  testButtonOn() {
+    this.state.socket.emit('new-message', function(data) {
+      console.log(data);
+    })
+  }
 
-  // testButtonOff() {
-  //   this.state.socket.emit('videochat-viewed', function(data) {
-  //     console.log(data);
-  //   })
-  // }
+  testButtonOff() {
+    this.state.socket.emit('message-viewed', function(data) {
+      console.log(data);
+    })
+  }
 
   matchNotification() {
-    this.setState({newMatch: true});
+    console.log('set notification to true')
+    this.props.setMatchNotification(true);
   }
 
   messageNotification() {
-    this.setState({newMessage: true});
+    this.props.setMessageNotification(true);
   }
 
-  videoChatNotification(data) {
-    this.setState({newVideoChat: true});
+  videoChatNotification() {
+    this.props.setVideoChatNotification(true);
   }
 
   matchViewed() {
-    this.setState({newMatch: false});
+    console.log('match is trying to turn off')
+    this.props.setMatchNotification(false);
   }
 
   messageViewed() {
-    this.setState({newMessage: false});
+    this.props.setMessageNotification(false);
   }
 
   videoChatViewed() {
-
-    this.setState({newVideoChat: false});
+    this.props.setVideoChatNotification(false);
   }
 
   logout(auth) {
@@ -77,14 +108,7 @@ class NavBar extends Component {
     auth.logout();
   }
 
-  handleChange(key){
-    this.setState({[key] : !this.state[key]});
-  }
-  
   render() {
-    console.log(this.state.newMatch, 'match state')
-    console.log(this.state.newMessage, 'message state')
-    console.log(this.state.newVideoChat, 'videochat state')
     return (
       <nav className="navbar navbar-default navbar-fixed-top topnav" role="navigation">
       <div className="container topnav">
@@ -99,17 +123,17 @@ class NavBar extends Component {
           </div>
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav navbar-right">
-              {/* <li><button onClick={this.testButtonOn}>Test Button On</button></li>
-              <li><button onClick={this.testButtonOff}>Test Button Off</button></li> */}
-              {this.state.newMatch ?
+              <li><button onClick={this.testButtonOn}>Test Button On</button></li>
+              <li><button onClick={this.testButtonOff}>Test Button Off</button></li> 
+              {this.props.matchNotification ?
               <li className="new-match" ><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li> 
               : null}
               <li><Link to='/matches'>Matches</Link></li>
-              {this.state.newMessage ?
+              {this.props.messageNotification ?
               <li className="new-message"><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
               : null}
               <li><Link to='/messages'>Messages</Link></li>
-              {this.state.newVideoChat ?
+              {this.props.videoChatNotification ?
               <li className="new-videochat"><img src="http://flyosity.com/images/_blogentries/networkicon/step1.png" height="15" width="15"/></li>
               : null}
               <li><Link to='/videochat'>Video Chat</Link></li>
@@ -124,4 +148,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

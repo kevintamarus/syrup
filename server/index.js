@@ -49,32 +49,32 @@ io.on('connection', socket => {
   })
 
   socket.on('new-match', function(data) {
-    console.log(data);
+    console.log('setting match notification to true');
     socket.emit('newMatch', {data: 'data'});
   })
 
   socket.on('new-message', function(data) {
-    console.log(data);
+    console.log('setting message notification to true');
     socket.emit('newMessage', {data: 'data'});
   })
 
   socket.on('new-videochat', function(data) {
-    console.log(data);
+    console.log('setting video chat notification to true');
     socket.emit('newVideoChat', {data: 'data'});
   })
 
   socket.on('match-viewed', function(data) {
-    console.log(data);
+    console.log('setting match notification to false');
     socket.emit('matchViewed', {data: 'data'});
   })
 
   socket.on('message-viewed', function(data) {
-    console.log(data);
+    console.log('setting message notification to false');
     socket.emit('messageViewed', {data: 'data'});
   })
 
   socket.on('videochat-viewed', function(data) {
-    console.log(data);
+    console.log('setting video chat notification to false');
     socket.emit('videoChatViewed', {data: 'data'});
   })
 
